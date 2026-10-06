@@ -1,9 +1,13 @@
 # ICT Európa — Vagyonadó
 
-Ezen az ágon az **ingyenes alapbecslés és szakértői konzultáció** változatának
-[megvalósítási terve](docs/ingyenes-kalkulator-szakertoi-kapu-terv.md) található.
-Állapot: tervezés; az új felület még nem készült el. A megőrzött kalkulátor
-a `archiv-kalkulator-2026-10-07` címkén érhető el.
+Ezen az ágon az **ingyenes alapbecslés és szakértői konzultáció** változata található.
+Az ingatlan, forint pénzeszköz és személyes jármű mellett a céges saját tőke,
+lezárt üzleti évek eredménye és tulajdoni hányad is kitölthető. A rejtett
+­tartalék és a tőkében szereplő osztalék mezői konzultációs ablakot nyitnak.
+A céges összeg a felületen és az exportban is **KORLÁTOZOTT BECSLÉS** jelölést kap.
+A holding-, kisebbségi, külföldi és vagyonkezelési vizsgálatok a szakértői kör részei.
+A [megvalósítás leírása](docs/ingyenes-kalkulator-szakertoi-kapu-terv.md) itt olvasható.
+A korábbi kalkulátor a `archiv-kalkulator-2026-10-07` címkén visszahívható.
 
 Magyar nyelvű, reszponzív weboldal a feltöltött **2026-os vagyonadó-törvénytervezet** elemzéséhez. React + TypeScript + Vite; külön számítási modul; Node.js + SQLite bemutató kapcsolatfelvétel. A jogszabály hatályosságát és hivatalos közzétételét nem ellenőriztük. Az ICT megadott képernyőképei alapján készült sötétkék–türkiz arculat, helyi betűkészletekkel.
 
@@ -51,10 +55,10 @@ A teljes build és API ugyanazon a 3000-es porton érhető el. A cikkek közvetl
 
 - Főoldal a feltöltött vagyonmegoszlás-képpel és ICT EUROPA logóval, háromlépéses kalkulátor, külön ablakban is megnyitható részletes eredmény és szöveges export.
 - Animált, öt tejüveg körből álló vagyonmegoszlás-blokk a kalkulátor után. A 2027–2050 közötti mintaforgatókönyv automatikusan léptet, szüneteltethető és kézzel is beállítható; a körök területe arányos az értékekkel. A kalkulátor saját vagyoni adataitól független szemléltetés. Csökkentett mozgást kérő böngészőbeállításnál kézi indítással használható.
-- Belföldi/külföldi magánszemély és vagyonkezelési adóalany, tulajdoni és családi megosztás.
-- Ingóságok egyedi értékhatára, üzleti használat, MRP, opció és terhelő ingatlanjog.
-- Cégértékelés, kisebbségi korrekció, holding, induló cég feltételei, osztalék, rejtett tartalék, évesítés, külföldi alternatív ráta és már megállapított szakértői/tranzakciós érték.
-- Igazolt tartozás, kötelező értékelési díj, helyi/járműadó jóváírás, egyezményes kizárás vagy levonás, kapcsolt vagyonkezelési keret.
+- Belföldi magánszemély alapvagyona: ingatlan, forint pénzeszköz, személyes jármű és korrekciók nélküli cégrészesedés. Tulajdoni hányad, jármű-értékhatár, igazolt tartozás és jogosult helyi/járműadó-jóváírás.
+- Céges alapadatok: saját tőke, 1–3 lezárt év eredménye és évesítése. A rejtett tartalék és osztalék mezői konzultációs kapuk; holding- és kisebbségi korrekció nem szerepel az ingyenes összegben.
+- Három szakértői kártya a cégérték-korrekciókról, a külföldi vagyonról és a családi/vagyonkezelési struktúrákról. A bezárható ablak az érdeklődési témával előkészített űrlaphoz vezet, a vagyoni adatok továbbítása nélkül.
+- Az eredményben és az exportban az alapbecslés terjedelme is megjelenik, céges tételnél és külön megjelölt szakértői témánál kiemelt figyelmeztetéssel.
 - Három olvasható cikk, gyakori kérdések és letölthető PDF-források.
 - A megküldött v1 cikk szerkesztett **vfinal** változata: `docs/vagyonado-cikk-vfinal.md`, illetve `public/forrasok/vagyonado-cikk-vfinal.docx`.
 
@@ -62,7 +66,7 @@ A cikkeket a `src/articles.ts`, a szabályokat a `src/tax.ts` tartalmazza. A for
 
 ## Kapcsolatfelvételi űrlap
 
-Az űrlap **bemutató módban** működik, ezt a felület és a sikeres beküldés visszajelzése is jelzi. A kiszolgáló ténylegesen ellenőrzi és privát SQLite-adatbázisba menti a tesztbeküldést. Nem küld e-mailt, CRM-bejegyzést vagy értesítést az ICT Európának. Nem gyűjti a kalkulátor vagyoni adatait. Az API eredetellenőrzést, méretkorlátot, rejtett robotmezőt és beküldési korlátot alkalmaz; reCAPTCHA nincs bekötve és nem állítjuk ennek ellenkezőjét.
+Az űrlap **bemutató módban** működik, ezt a felület és a sikeres beküldés visszajelzése is jelzi. A kiszolgáló ténylegesen ellenőrzi és privát SQLite-adatbázisba menti a tesztbeküldést. Nem küld e-mailt, CRM-bejegyzést vagy értesítést az ICT Európának. Nem gyűjti a kalkulátor vagyoni adatait. A választott konzultációs témát az űrlap üzenetéhez hozzáfűzi. Az API eredetellenőrzést, méretkorlátot, rejtett robotmezőt és beküldési korlátot alkalmaz; reCAPTCHA nincs bekötve és nem állítjuk ennek ellenkezőjét.
 
 A tesztadatok 30 nap után az induláskor vagy óránként futó takarításkor törlődnek. Az adatbázis és az export nem kerül verziókezelésbe vagy a nyilvános buildbe. Az üzemeltető exportálhatja az adatokat:
 

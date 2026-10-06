@@ -1,6 +1,6 @@
 # Ingyenes kalkulátor és szakértői konzultáció — megvalósítási terv
 
-Dátum: 2026. október 7. Állapot: terv; a felület megvalósítása következő lépés.
+Dátum: 2026. október 7. Állapot: megvalósítva, a céges alapadatoknál kért kiegészítéssel.
 
 Új ág: `ingyenes-kalkulator-szakertoi-kapu`.
 Megőrzött változat: `archiv-kalkulator-2026-10-07` címke,
@@ -23,9 +23,10 @@ belépés, automatikus mezőfeloldás vagy fizetési folyamat.
 
 ## Ingyenes alapbecslés
 
-Belföldi illetőségű magánszemély saját, egyszerű belföldi vagyonára:
+Belföldi illetőségű magánszemély megadott belföldi alapvagyonára:
 
 - Ingatlan: lakóingatlan és nyaraló, előzetesen meghatározott számított értékkel.
+- Társasági részesedés: saját tőke, 1–3 lezárt év adózott eredménye, évhossz és tulajdoni hányad. Az alapképlet korrekciók nélkül működik.
 - Pénzeszköz: forint bankszámla és készpénz.
 - Személyes használatú jármű, a modellben szereplő egyedi értékhatárral.
 - Tulajdoni hányad, igazolt és levonható tartozás, a bevont alapvagyonhoz
@@ -42,7 +43,7 @@ Az eredmény fejlécének javasolt szövege:
 **„BECSÜLT VAGYONADÓ AZ ALAPADATOK ALAPJÁN”**.
 
 Mellette mindig olvasható:
-„A becslés a megadott alapvagyonra vonatkozik. A cégrészesedések, külföldi
+„A becslés a megadott alapvagyonra vonatkozik. A céges korrekciók, külföldi
 vagyonelemek és vagyonkezelési struktúrák hatását egyedi vizsgálat tárja fel.”
 
 A részletes eredmény és a letöltött jelentés ugyanezt a terjedelmet jelzi.
@@ -55,13 +56,18 @@ Az alapbecslés nem a teljes vagyonra vonatkozó végleges adókötelezettség,
 
 | Kártya | Olvasható témák |
 | --- | --- |
-| Cégértékelés és üzletrészek | Saját tőke és rejtett tartalékok; holdingértékelés; kisebbségi korrekció; induló cégek; értékelési kivételek |
+| Cégértékelés és üzletrészek | Rejtett tartalék és tőkében szereplő osztalék; holdingértékelés; kisebbségi korrekció; induló cégek; értékelési kivételek |
 | Külföldi vagyon és illetőség | Külföldi ingatlanok és cégek; illetőség; devizaértékelés; egyezmények és kettős adóztatás |
 | Családi és vagyonkezelési struktúrák | Családi vagyonmegosztás; bizalmi vagyonkezelés; magánalapítványok; kapcsolt konstrukciók |
 
 A cím, a témák, a lakat és a „Szakértői konzultáció része” jelölés olvasható.
 A mezőket idéző háttér halvány, enyhén elmosott bemutató, valódi összegek nélkül.
 A bemutatóelemek nem kitölthető mezők, és nem vesznek részt a kalkulációban.
+A céges szerkesztőben a rejtett tartalék és a tőkében szereplő osztalék
+mezője ugyanazt a céges konzultációs ablakot nyitja. A képlet ezen mezők,
+a holding- és kisebbségi korrekciók nélkül ad alapbecslést; ezt a cégértéknél,
+a részletes eredményben és az exportban is feltüntetjük. A céges összeg és az
+éves adó mellett jól látható „KORLÁTOZOTT BECSLÉS” jelölés szerepel.
 A kártya gombja egérrel, érintéssel és billentyűzettel is működik.
 Mobilon a kártyák egymás alatt jelennek meg, az eredmény a konzultációs út során megmarad.
 

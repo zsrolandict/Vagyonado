@@ -2,6 +2,7 @@ import {chromium} from '@playwright/test';
 import {readFileSync} from 'node:fs';
 import {createServer} from 'node:http';
 import assert from 'node:assert/strict';
+import {verifyExpertFlow,verifyCompanyGate} from './expert-flow.mjs';
 // The managed cloud browser blocks file: URLs. Serve the actual generated HTML
 // locally and exercise its file-navigation branch without weakening that policy.
 const path=process.argv[2]||'/workspace/Vagyonado-bemutato.html';
@@ -31,7 +32,7 @@ try{
   const box=await dialog.boundingBox();assert.ok(box&&box.y>=0&&box.y<height,'Az eredmény ablaka a képernyőn jelenik meg.');
   const download=resultPage.waitForEvent('download');await dialog.getByRole('button',{name:'Kalkuláció letöltése'}).click();
   const report=await download;assert.equal(report.suggestedFilename(),'ICT-Europa-vagyonado-kalkulacio.txt');
-  assert.match(readFileSync(await report.path(),'utf8'),/Adóalap: 500\s*000\s*000 Ft/);
+  assert.match(readFileSync(await report.path(),'utf8'),/Adóalap: 500\s*000\s*000 Ft/);assert.match(readFileSync(await report.path(),'utf8'),/egyedi vizsgálat szükséges/);
   await dialog.getByRole('button',{name:'Részletes eredmény bezárása'}).click();
   assert.equal(await dialog.isVisible(),false);
   assert.equal(await value.inputValue(),'1500','A részletes eredmény nem törli a megadott vagyont.');
@@ -52,17 +53,11 @@ try{
   await resultPage.getByRole('tab',{name:'Eredmény'}).click();await resultPage.getByTestId('final-tax').waitFor({state:'visible'});
   assert.match(await resultPage.getByTestId('final-tax').textContent(),/4\s*000\s*000 Ft/);
   await resultPage.getByRole('tab',{name:'Vagyonelemek'}).click();
-  await resultPage.getByRole('combobox',{name:'Vagyonelem típusa',exact:true}).selectOption('company');
-  const equity=resultPage.getByRole('spinbutton',{name:'Beszámoló szerinti saját tőke',exact:true});
-  await equity.fill('');await equity.pressSequentially('255');assert.equal(await equity.inputValue(),'255');
-  for(const [year,profit] of [['Utolsó lezárt üzleti év','-3.2'],['Előző lezárt üzleti év','-8.9'],['Az azt megelőző lezárt üzleti év','0']]) {
-    const field=resultPage.getByRole('spinbutton',{name:`${year} adózott eredménye`,exact:true});
-    await field.fill('');await field.pressSequentially(profit);assert.equal(await field.inputValue(),profit);
-  }
-  await resultPage.keyboard.press('Tab');
-  assert.match(await resultPage.locator('.company-answer strong').textContent(),/85 M Ft/);
-  assert.equal(await resultPage.getByRole('alert').count(),0);
-  await resultPage.locator('.asset-card').screenshot({path:`/tmp/vagyonado-company-${width}.png`});
+  await resultPage.getByRole('tab',{name:'Levonások'}).click();
+  await resultPage.getByRole('spinbutton',{name:'Igazolt, levonható tartozások',exact:true}).fill('0');
+  await resultPage.getByRole('tab',{name:'Vagyonelemek'}).click();
+  await verifyCompanyGate(resultPage);await verifyExpertFlow(resultPage);
+  await resultPage.locator('.expert-modules').screenshot({path:`/tmp/vagyonado-expert-${width}.png`});
   assert.ok(await resultPage.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'Nincs vízszintes túlcsordulás.');
   assert.deepEqual(pageErrors,[]);await resultPage.close();
  }

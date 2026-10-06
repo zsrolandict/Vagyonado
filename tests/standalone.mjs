@@ -1,0 +1,71 @@
+import {chromium} from '@playwright/test';
+import {readFileSync} from 'node:fs';
+import {createServer} from 'node:http';
+import assert from 'node:assert/strict';
+// The managed cloud browser blocks file: URLs. Serve the actual generated HTML
+// locally and exercise its file-navigation branch without weakening that policy.
+const path=process.argv[2]||'/workspace/Vagyonado-bemutato.html';
+const html=readFileSync(path,'utf8').replace("if(location.protocol==='file:'){","if(true){");
+const server=createServer((req,res)=>{res.writeHead(200,{'Content-Type':'text/html; charset=utf-8'});res.end(html);});
+await new Promise(r=>server.listen(0,'127.0.0.1',r));
+const browser=await chromium.launch({executablePath:'/usr/bin/chromium',headless:true,args:['--no-sandbox']});
+try{
+ for(const [width,height] of [[1440,900],[390,844]]){
+  const resultPage=await browser.newPage({viewport:{width,height}});resultPage.setDefaultTimeout(10000);
+  const pageErrors=[];resultPage.on('pageerror',e=>pageErrors.push(e.message));
+  await resultPage.goto(`http://127.0.0.1:${server.address().port}`);
+  await resultPage.waitForFunction(()=>{const image=document.querySelector('.hero-office-photo');return image?.complete&&image.naturalWidth>1000;});
+  assert.match(await resultPage.locator('.hero-office-photo').getAttribute('src'),/^data:image\/jpeg;base64,/);
+  await resultPage.getByRole('button',{name:'Kiszámolom a vagyonadómat'}).click();
+  await resultPage.getByRole('button',{name:'Részletes eredmény',exact:true}).click();
+  const dialog=resultPage.getByRole('dialog',{name:'Így áll össze a becslése.'});
+  await dialog.getByRole('heading',{name:'Még nem adott meg vagyoni értéket.'}).waitFor();
+  await dialog.getByRole('button',{name:'Vagyonelemek megadása'}).click();
+  const value=resultPage.getByRole('spinbutton',{name:'Teljes vagyonelem számított értéke',exact:true});
+  await value.fill('1500');
+  await resultPage.getByRole('button',{name:'Részletes eredmény',exact:true}).click();
+  await resultPage.getByTestId('dialog-final-tax').waitFor({state:'visible'});
+  assert.match(await resultPage.getByTestId('dialog-final-tax').textContent(),/5\s*000\s*000 Ft/);
+  assert.match(await dialog.locator('.breakdown>div').filter({has:resultPage.locator('dt').filter({hasText:/^Nettó vagyon$/})}).textContent(),/1\s*500\s*000\s*000 Ft/);
+  assert.match(await dialog.locator('.breakdown>div').filter({has:resultPage.locator('dt').filter({hasText:/^Adóalap$/})}).textContent(),/500\s*000\s*000 Ft/);
+  const box=await dialog.boundingBox();assert.ok(box&&box.y>=0&&box.y<height,'Az eredmény ablaka a képernyőn jelenik meg.');
+  const download=resultPage.waitForEvent('download');await dialog.getByRole('button',{name:'Kalkuláció letöltése'}).click();
+  const report=await download;assert.equal(report.suggestedFilename(),'ICT-Europa-vagyonado-kalkulacio.txt');
+  assert.match(readFileSync(await report.path(),'utf8'),/Adóalap: 500\s*000\s*000 Ft/);
+  await dialog.getByRole('button',{name:'Részletes eredmény bezárása'}).click();
+  assert.equal(await dialog.isVisible(),false);
+  assert.equal(await value.inputValue(),'1500','A részletes eredmény nem törli a megadott vagyont.');
+  await resultPage.getByRole('button',{name:'Levonások megadása',exact:true}).click();
+  await resultPage.getByRole('spinbutton',{name:'Igazolt, levonható tartozások',exact:true}).fill('100');
+  await resultPage.getByRole('checkbox',{name:'A tartozás megfelel a tervezet igazolási és levonhatósági feltételeinek'}).check();
+  await resultPage.getByRole('button',{name:'Részletes eredmény',exact:true}).click();
+  await resultPage.getByTestId('dialog-final-tax').waitFor({state:'visible'});
+  assert.match(await resultPage.getByTestId('dialog-final-tax').textContent(),/4\s*000\s*000 Ft/);
+  await resultPage.screenshot({path:`/tmp/vagyonado-detail-after-${width}.png`});
+  await resultPage.keyboard.press('Escape');assert.equal(await dialog.isVisible(),false);
+  assert.equal(await resultPage.evaluate(()=>document.body.style.overflow),'');
+  await resultPage.getByRole('tab',{name:'Vagyonelemek'}).click();await value.fill('-1');
+  await resultPage.getByRole('button',{name:'Részletes eredmény',exact:true}).click();
+  await dialog.getByRole('heading',{name:'Javítsa a megadott adatokat.'}).waitFor();
+  assert.equal(await dialog.getByRole('button',{name:'Kalkuláció letöltése'}).count(),0);
+  await dialog.getByRole('button',{name:'Adatok ellenőrzése'}).click();await value.fill('1500');
+  await resultPage.getByRole('tab',{name:'Eredmény'}).click();await resultPage.getByTestId('final-tax').waitFor({state:'visible'});
+  assert.match(await resultPage.getByTestId('final-tax').textContent(),/4\s*000\s*000 Ft/);
+  assert.ok(await resultPage.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'Nincs vízszintes túlcsordulás.');
+  assert.deepEqual(pageErrors,[]);await resultPage.close();
+ }
+ const page=await browser.newPage({viewport:{width:1440,height:900}});page.setDefaultTimeout(10000);
+ const errors=[];page.on('pageerror',e=>errors.push(e.message));
+ await page.goto(`http://127.0.0.1:${server.address().port}`);await page.evaluate(()=>document.fonts.ready);
+ await page.getByRole('button',{name:'Kiszámolom a vagyonadómat'}).click();
+ await page.getByRole('spinbutton',{name:'Teljes vagyonelem számított értéke',exact:true}).fill('1500');
+ assert.match(await page.getByTestId('live-tax').textContent(),/5\s*000\s*000 Ft/);
+ await page.getByRole('button',{name:'Elolvasom az elemzést'}).click();
+ assert.match(await page.locator('article h1').textContent(),/Vagyonadó 2026/);
+ const download=page.waitForEvent('download');await page.getByRole('link',{name:'Véglegesített cikk letöltése'}).click();
+ assert.equal((await download).suggestedFilename(),'vagyonado-cikk-vfinal.docx');
+ const response=await page.evaluate(async()=>{const r=await fetch('/api/contact',{method:'POST'});return {status:r.status,body:await r.json()};});
+ assert.equal(response.status,503);assert.match(response.body.error,/nem küld űrlapot/);
+ assert.deepEqual(errors,[]);
+ console.log('Önálló HTML ellenőrizve asztali és mobil nézetben: beágyazott irodaházkép, részletes eredmény gomb, adóalap és adó, levonás, jelentésletöltés, bezárás és Escape, hiányzó/hibás adatok, cikknavigáció, Word-letöltés és az offline űrlap visszajelzése.');
+}finally{await browser.close();await new Promise(r=>server.close(r));}

@@ -47,7 +47,7 @@ document.addEventListener('click',event=>{
 `;
 html=html.replace(/<script[^>]+src="[^"]+"[^>]*><\/script>/,()=>`<script>${support.replace(/<\/script/gi,'<\\/script')}</script><script type="module">${javascript}</script>`);
 html=html.replace(/<link[^>]+href="[^"]+\.css"[^>]*>/,()=>`<style>${css}</style>`);
-html=html.replace('href="/favicon.svg"','href="data:image/svg+xml;base64,'+readFileSync(resolve(dist,'favicon.svg')).toString('base64')+'"');
+html=html.replace(/href="\/favicon\.svg(?:\?[^\"]*)?"/,'href="data:image/svg+xml;base64,'+readFileSync(resolve(dist,'favicon.svg')).toString('base64')+'"');
 html=html.replace('<div id="root"></div>','<div style="background:#e7f7fb;color:#1d3657;padding:8px 20px;text-align:center;font:11px Arial,sans-serif">Önálló bemutató · A kalkulátor és a cikkek működnek, az űrlap nem küld megkeresést.</div><div id="root"></div>');
 const output=resolve(process.argv[2]||'/workspace/Vagyonado-bemutato.html');
 writeFileSync(output,html);console.log(`Megnyitható HTML-bemutató: ${output} (${(Buffer.byteLength(html)/1024/1024).toFixed(1)} MB).`);

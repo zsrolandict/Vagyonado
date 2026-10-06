@@ -2,6 +2,14 @@
 
 Magyar nyelvű, reszponzív weboldal a feltöltött **2026-os vagyonadó-törvénytervezet** elemzéséhez. React + TypeScript + Vite; külön számítási modul; Node.js + SQLite bemutató kapcsolatfelvétel. A jogszabály hatályosságát és hivatalos közzétételét nem ellenőriztük. Az ICT megadott képernyőképei alapján készült sötétkék–türkiz arculat, helyi betűkészletekkel.
 
+## Bemutató megnyitása telepítés nélkül
+
+Töltse le a [Vagyonado-html-csomag.zip](https://github.com/zsrolandict/Vagyonado/raw/refs/heads/main/Vagyonado-html-csomag.zip) fájlt, csomagolja ki, és nyissa meg a benne lévő **index.html** fájlt böngészőben. Node.js és külön kiszolgáló nem szükséges.
+
+Ha a GitHub **Code → Download ZIP** menüpontjával a teljes repozitóriumot tölti le, kicsomagolás után a legfelső szinten található **Vagyonado-bemutato.html** fájlt nyissa meg. A projekt fejlesztői belépője, az `index.html`, az alábbi fejlesztői indítással használható.
+
+A bemutatóban a kalkulátor, a részletes eredmény és a cikkek működnek, a kapcsolatfelvételi űrlap nem küld megkeresést. A HTML és a bemutató ZIP továbbküldhető.
+
 ## Futtatás
 
 Node **24.x** szükséges; a tesztelt verzió a `.node-version` fájlban található.

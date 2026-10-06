@@ -51,6 +51,18 @@ try{
   await dialog.getByRole('button',{name:'Adatok ellenőrzése'}).click();await value.fill('1500');
   await resultPage.getByRole('tab',{name:'Eredmény'}).click();await resultPage.getByTestId('final-tax').waitFor({state:'visible'});
   assert.match(await resultPage.getByTestId('final-tax').textContent(),/4\s*000\s*000 Ft/);
+  await resultPage.getByRole('tab',{name:'Vagyonelemek'}).click();
+  await resultPage.getByRole('combobox',{name:'Vagyonelem típusa',exact:true}).selectOption('company');
+  const equity=resultPage.getByRole('spinbutton',{name:'Beszámoló szerinti saját tőke',exact:true});
+  await equity.fill('');await equity.pressSequentially('255');assert.equal(await equity.inputValue(),'255');
+  for(const [year,profit] of [['Utolsó lezárt üzleti év','-3.2'],['Előző lezárt üzleti év','-8.9'],['Az azt megelőző lezárt üzleti év','0']]) {
+    const field=resultPage.getByRole('spinbutton',{name:`${year} adózott eredménye`,exact:true});
+    await field.fill('');await field.pressSequentially(profit);assert.equal(await field.inputValue(),profit);
+  }
+  await resultPage.keyboard.press('Tab');
+  assert.match(await resultPage.locator('.company-answer strong').textContent(),/85 M Ft/);
+  assert.equal(await resultPage.getByRole('alert').count(),0);
+  await resultPage.locator('.asset-card').screenshot({path:`/tmp/vagyonado-company-${width}.png`});
   assert.ok(await resultPage.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'Nincs vízszintes túlcsordulás.');
   assert.deepEqual(pageErrors,[]);await resultPage.close();
  }

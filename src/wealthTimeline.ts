@@ -48,7 +48,7 @@ export function mountWealthTimeline(host:HTMLElement) {
     const compact=width<700;
     const padding=compact?12:28;
     const gap=compact?18:28;
-    const maxDiameter=compact?Math.min(340,width-padding*2):Math.min(390,(width-padding*2-gap*2)/(1+Math.sqrt(10/60)+Math.sqrt(5/60)));
+    const maxDiameter=compact?Math.min(280,width-padding*2):Math.min(320,(width-padding*2-gap*2)/(1+Math.sqrt(10/60)+Math.sqrt(5/60)));
     const diameters=shares.map(value=>maxDiameter*Math.sqrt(value/60));
     const positions:{x:number;y:number}[]=Array(5);
     let height:number;

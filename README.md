@@ -4,7 +4,7 @@ Magyar nyelvű, reszponzív weboldal a feltöltött **2026-os vagyonadó-törvé
 
 ## Bemutató megnyitása telepítés nélkül
 
-Töltse le a [Vagyonado-html-csomag.zip](https://github.com/zsrolandict/Vagyonado/raw/refs/heads/main/Vagyonado-html-csomag.zip) fájlt, csomagolja ki, és nyissa meg a benne lévő **index.html** fájlt böngészőben. Node.js és külön kiszolgáló nem szükséges.
+Töltse le a [Vagyonado-html-csomag.zip](./Vagyonado-html-csomag.zip?raw=true) fájlt, csomagolja ki, és nyissa meg a benne lévő **index.html** fájlt böngészőben. Node.js és külön kiszolgáló nem szükséges.
 
 Ha a GitHub **Code → Download ZIP** menüpontjával a teljes repozitóriumot tölti le, kicsomagolás után a legfelső szinten található **Vagyonado-bemutato.html** fájlt nyissa meg. A projekt fejlesztői belépője, az `index.html`, az alábbi fejlesztői indítással használható.
 
@@ -68,6 +68,13 @@ npm run leads:export
 A nyilvános élesítéshez még szükséges az ICT által jóváhagyott fogadási mód (e-mail/CRM), a tényleges adatkezelő és adatkezelési tájékoztató, valamint szakmai tartalomellenőrzés. A bemutató tájékoztató nem éles adatkezelési dokumentum. A beküldési fogadást az új célhoz igazítva kell megvalósítani; addig valós megkeresésre az ICT honlapja használható.
 
 ## Felhőkörnyezet
+
+A finomhangolás előtti állapot a `finomhangolas-elott-2026-10-06` Git-címkével
+megőrzött. A külön forrás- és Git-mentés használata: [visszaállítás](docs/visszaallitas.md).
+
+A lap alján szereplő hírlevélblokk az ICT Európa megadott adatkezelési
+tájékoztatóját nyitja meg. A valódi hírlevélküldő rendszer bekötése későbbi lépés:
+addig a feliratkozási gomb inaktív, a blokk nem küld vagy ment adatot.
 
 A feladat már elkülönített környezetben fut. Használja ezt a checkoutot, új Git worktree-t csak kifejezett kérésre hozzon létre. A függőségek és fájlok megtarthatók; a folyamatokat új feladatban újra kell indítani. Az install és start utasítások a környezet konfigurációs tervezetébe is menthetők. A GitHubra feltöltött forráskód önmagában nem publikál élő weboldalt.
 

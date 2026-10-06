@@ -30,9 +30,16 @@ console.log('Validáció kész');await page.getByRole('button',{name:'Elolvasom 
 await page.goBack();await page.reload();
 console.log('Cikk kész');await page.getByRole('button',{name:'Beszéljünk a vagyonáról'}).click();
 const form=page.locator('.contact-form-card form');await form.locator('[name="lastName"]').fill('Teszt');await form.locator('[name="firstName"]').fill('Minta');await form.locator('[name="email"]').fill('minta@example.com');await form.locator('[name="phone"]').fill('+36 20 123 4567');await page.getByRole('checkbox',{name:'Vállalkozás kapcsán kérek segítséget'}).uncheck();await form.locator('[name="message"]').fill('Ez egy automatikus tesztmegkeresés.');
-await form.getByRole('button',{name:'adatkezelési tájékoztatót'}).click();assert.equal(await page.locator('.privacy-dialog').isVisible(),true);await page.locator('.privacy-dialog').getByRole('button',{name:'Elolvastam',exact:true}).click();await form.locator('[name="consent"]').check();
+await form.getByRole('button',{name:'adatkezelési tájékoztatót'}).click();const contactPrivacy=page.getByRole('dialog',{name:'Adatkezelési tájékoztató',exact:true});assert.equal(await contactPrivacy.isVisible(),true);await contactPrivacy.getByRole('button',{name:'Elolvastam',exact:true}).click();await form.locator('[name="consent"]').check();
 console.log('Űrlap kész');await form.getByRole('button',{name:'Kérem a konzultációt'}).click();await page.getByText('A tesztmegkeresést rögzítettük.').waitFor();
 const api=await page.request.get(base+'/api/health');assert.equal(api.status(),200);
+const newsletter=page.getByRole('form',{name:'Hírlevél-feliratkozás'});
+assert.equal(await newsletter.getByRole('button',{name:'Feliratkozom!'}).isDisabled(),true);
+await newsletter.getByRole('button',{name:'Elolvasom az adatkezelési tájékoztatót'}).click();
+const newsletterPrivacy=page.getByRole('dialog',{name:'Adatkezelési tájékoztató (GDPR)',exact:true});
+assert.equal(await newsletterPrivacy.isVisible(),true);assert.match(await newsletterPrivacy.textContent(),/ICT Európa Finance Zrt\./);assert.match(await newsletterPrivacy.textContent(),/27035878-2-43/);assert.match(await newsletterPrivacy.textContent(),/72 órán belül/);
+await page.keyboard.press('Escape');assert.equal(await newsletterPrivacy.isVisible(),false);
+assert.match(await page.locator('.calculation-disclaimer').textContent(),/A felelősségkizárás nem terjed ki/);
 await page.setViewportSize({width:390,height:844});await page.goto(base);await page.evaluate(()=>document.fonts.ready);await page.screenshot({path:'/tmp/vagyonado-mobile.png',fullPage:true});
 assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth),'Mobilon vízszintes túlcsordulás');
 await page.getByRole('button',{name:'Menü megnyitása'}).click();await page.getByRole('button',{name:'Kalkulátor',exact:true}).click();assert.equal(await page.getByRole('button',{name:'Menü megnyitása'}).getAttribute('aria-expanded'),'false');

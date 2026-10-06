@@ -1,5 +1,23 @@
 # Visszaállítás a finomhangolás előtti állapotra
 
+## Megőrzött kalkulátor az új konzultációs változat előtt
+
+2026. október 7-én megőrzött állapot: `archiv-kalkulator-2026-10-07`.
+Commit: `f1557025ecc22d773ca6e9b366068b43b55c6f7d`.
+Ez tartalmazza az eredeti feltöltött képet és ICT-logót, az ICT böngészőikont,
+a pontosított üzletiév-neveket, a negatív számok bevitelének javítását és a
+kisebb vagyonmegoszlás-animációt.
+
+- [Megőrzött forrás](https://github.com/zsrolandict/Vagyonado/tree/archiv-kalkulator-2026-10-07)
+- [Megőrzött HTML-csomag](https://github.com/zsrolandict/Vagyonado/raw/refs/tags/archiv-kalkulator-2026-10-07/Vagyonado-html-csomag.zip)
+- [Az új változat ága](https://github.com/zsrolandict/Vagyonado/tree/ingyenes-kalkulator-szakertoi-kapu)
+
+Az `ict-logo-es-kalkulator-javitasok` ág is megőrzi a korábbi állapotot.
+Az új felület tervezése és későbbi megvalósítása az
+`ingyenes-kalkulator-szakertoi-kapu` ágon folytatódik.
+
+## A legelső finomhangolás előtti mentés
+
 Megőrzött verzió: `finomhangolas-elott-2026-10-06`.
 Commit: `12280d034501ad1b819d7689477473a7ad756680`.
 

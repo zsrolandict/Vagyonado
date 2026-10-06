@@ -1,5 +1,10 @@
 # ICT Európa — Vagyonadó
 
+Ezen az ágon az **ingyenes alapbecslés és szakértői konzultáció** változatának
+[megvalósítási terve](docs/ingyenes-kalkulator-szakertoi-kapu-terv.md) található.
+Állapot: tervezés; az új felület még nem készült el. A megőrzött kalkulátor
+a `archiv-kalkulator-2026-10-07` címkén érhető el.
+
 Magyar nyelvű, reszponzív weboldal a feltöltött **2026-os vagyonadó-törvénytervezet** elemzéséhez. React + TypeScript + Vite; külön számítási modul; Node.js + SQLite bemutató kapcsolatfelvétel. A jogszabály hatályosságát és hivatalos közzétételét nem ellenőriztük. Az ICT megadott képernyőképei alapján készült sötétkék–türkiz arculat, helyi betűkészletekkel.
 
 ## Bemutató megnyitása telepítés nélkül

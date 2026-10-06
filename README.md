@@ -44,7 +44,8 @@ A teljes build és API ugyanazon a 3000-es porton érhető el. A cikkek közvetl
 
 ## Elkészült tartalom
 
-- Főoldal üvegfelületű irodaház képével, háromlépéses kalkulátor, külön ablakban is megnyitható részletes eredmény és szöveges export.
+- Főoldal a feltöltött vagyonmegoszlás-képpel és ICT EUROPA logóval, háromlépéses kalkulátor, külön ablakban is megnyitható részletes eredmény és szöveges export.
+- Animált, öt tejüveg körből álló vagyonmegoszlás-blokk a kalkulátor után. A 2027–2050 közötti mintaforgatókönyv automatikusan léptet, szüneteltethető és kézzel is beállítható; a körök területe arányos az értékekkel. A kalkulátor saját vagyoni adataitól független szemléltetés. Csökkentett mozgást kérő böngészőbeállításnál kézi indítással használható.
 - Belföldi/külföldi magánszemély és vagyonkezelési adóalany, tulajdoni és családi megosztás.
 - Ingóságok egyedi értékhatára, üzleti használat, MRP, opció és terhelő ingatlanjog.
 - Cégértékelés, kisebbségi korrekció, holding, induló cég feltételei, osztalék, rejtett tartalék, évesítés, külföldi alternatív ráta és már megállapított szakértői/tranzakciós érték.
@@ -90,6 +91,7 @@ A fájl helyben megnyitható és továbbküldhető. A felület, az irodaház ké
 
 ```sh
 node tests/standalone.mjs ./Vagyonado-bemutato.html
+node tests/wealth-timeline.mjs ./Vagyonado-bemutato.html
 ```
 
 Ez az ellenőrzés asztali és mobil nézetben is megnyitja a részletes eredményt, ellenőrzi az adóalapot, az éves adót, a letöltött kalkulációt, a hibás vagy hiányzó adatok visszajelzését, a beágyazott képet és a cikknavigációt. A felhőkörnyezet böngészője tiltja a helyi fájl-URL-eket, ezért ugyanazt a HTML-t ideiglenes helyi HTTP-kiszolgálón vizsgálja, a fájlmegnyitási navigációs ágat aktiválva.

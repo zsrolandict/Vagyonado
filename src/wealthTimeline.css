@@ -1,0 +1,34 @@
+.wealth-timeline-section{background:radial-gradient(ellipse at 18% 35%,#dceef3b3,transparent 55%),radial-gradient(ellipse at 85% 70%,#dfe7efb3,transparent 55%),linear-gradient(135deg,#f6f7f7,#eef3f6 55%,#e7edf2);border-top:1px solid #e2eaf0}
+.wealth-timeline-heading h2{color:#223e53}.wealth-timeline-heading h2 em{color:var(--cyan-dark)}
+.wealth-timeline-card{overflow:hidden;border:1px solid #fff;border-radius:12px 48px 12px 12px;background:linear-gradient(140deg,#ffffff9c,#ffffff38);box-shadow:0 16px 50px #284a6410,inset 0 1px 0 #fff;backdrop-filter:blur(16px)}
+.wealth-canvas{position:relative;width:100%;min-height:400px;background:radial-gradient(ellipse at 28% 30%,#9acee81f,transparent 45%),radial-gradient(ellipse at 72% 75%,#00b4d71c,transparent 45%)}
+.wealth-bubble{--bubble-tint:177,207,223;position:absolute;border:1px solid #ffffffd9;border-radius:50%;transform:translate(-50%,-50%);background:radial-gradient(ellipse at 28% 15%,#ffffffe8,rgba(255,255,255,.48) 47%,rgba(var(--bubble-tint),.3));box-shadow:inset 0 2px 8px #ffffffed,inset -4px -6px 18px #447f9e14,0 12px 26px #234d6814,0 0 24px #00b4d70a;backdrop-filter:blur(12px);color:#284659;transition:width 1s ease-in-out,height 1s ease-in-out,left 1s ease-in-out,top 1s ease-in-out;animation:wealth-drift 7s ease-in-out infinite}
+.wealth-bubble-company{--bubble-tint:151,174,194;animation-delay:-2s;color:#334a63}
+.wealth-bubble-finance{--bubble-tint:99,194,209;animation-delay:-4s;color:#126b7f;box-shadow:inset 0 2px 8px #ffffffed,inset -4px -6px 18px #447f9e14,0 12px 26px #234d6814,0 0 28px #00b4d71c}
+.wealth-bubble-art{--bubble-tint:187,197,208;animation-delay:-1s}
+.wealth-bubble-luxury{--bubble-tint:162,203,213;animation-delay:-5s}
+.wealth-bubble-content{display:flex;flex-direction:column;justify-content:center;align-items:center;width:100%;height:100%;gap:clamp(2px,calc(var(--bubble-size)*.012),5px);text-align:center}
+.wealth-bubble-content>svg{width:clamp(14px,calc(var(--bubble-size)*.2),46px);height:clamp(14px,calc(var(--bubble-size)*.2),46px);flex-shrink:0;margin-bottom:2px}
+.wealth-bubble h3{font-size:clamp(9px,calc(var(--bubble-size)*.09),20px);line-height:1.18;font-weight:700;letter-spacing:-.035em;max-width:80%;overflow-wrap:anywhere;margin:0}
+.wealth-bubble-property h3{font-size:clamp(12px,calc(var(--bubble-size)*.073),23px)}
+.wealth-bubble-value{display:block;font-size:clamp(12px,calc(var(--bubble-size)*.18),32px);font-weight:500;letter-spacing:-.06em;line-height:1.15;font-variant-numeric:tabular-nums}
+.wealth-controls{padding:26px 36px 24px;background:#ffffff8c;border-top:1px solid #fff;backdrop-filter:blur(16px)}
+.wealth-controls-top{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:16px}
+.wealth-controls-top p{margin:0;color:#61788b;font-size:12px;font-weight:600}
+.wealth-controls-top p span{margin-left:12px;color:#899dab;font-size:11px;white-space:nowrap}
+.wealth-controls-top output{color:#24475d;font-size:36px;font-weight:500;line-height:1;letter-spacing:-.07em;font-variant-numeric:tabular-nums}
+.wealth-slider-row{display:flex;align-items:flex-start;gap:24px}
+.wealth-play{display:grid;place-items:center;width:50px;height:50px;flex-shrink:0;border:1px solid #ffffffb3;border-radius:50%;color:#fff;background:linear-gradient(145deg,#294b66,#183a53);box-shadow:0 5px 15px #24486324;transition:background .2s,transform .2s}
+.wealth-play:hover{background:var(--cyan-dark);transform:translateY(-1px)}
+.wealth-play svg{width:26px;height:26px;stroke-width:2}
+.wealth-slider-track{flex:1;min-width:0;padding-top:17px}
+.wealth-slider-track input{display:block;appearance:none;-webkit-appearance:none;width:100%;height:6px;margin:0;border-radius:6px;background:linear-gradient(to right,#00a4c7 0%,#00a4c7 var(--timeline-progress),#cbd8e0 var(--timeline-progress),#cbd8e0 100%);cursor:pointer;touch-action:pan-y;accent-color:var(--cyan)}
+.wealth-slider-track input::-webkit-slider-thumb{appearance:none;-webkit-appearance:none;width:19px;height:19px;border:3px solid #fff;border-radius:50%;background:#00a9cd;box-shadow:0 0 0 1px #80becd,0 3px 9px #23618030}
+.wealth-slider-track input::-moz-range-thumb{width:13px;height:13px;border:3px solid #fff;border-radius:50%;background:#00a9cd;box-shadow:0 0 0 1px #80becd,0 3px 9px #23618030}
+.wealth-slider-track input:focus-visible{outline:3px solid #00a9cd;outline-offset:8px}
+.wealth-year-ticks{position:relative;height:20px;margin-top:12px;font-size:10px;color:#758a9a;font-variant-numeric:tabular-nums}
+.wealth-year-ticks span{position:absolute;left:0}.wealth-year-ticks span:nth-child(2){left:34.7826%;transform:translateX(-50%)}.wealth-year-ticks span:nth-child(3){left:65.2174%;transform:translateX(-50%)}.wealth-year-ticks span:last-child{left:100%;transform:translateX(-100%)}
+.wealth-controls-hint{margin:16px 0 0;color:#7a8e9d;font-size:10px;line-height:1.6}
+@keyframes wealth-drift{0%,100%{translate:0 0}50%{translate:0 -4px}}
+@media(max-width:680px){.wealth-timeline-card{border-radius:8px 32px 8px 8px}.wealth-timeline-heading>p{font-size:12px}.wealth-controls{padding:22px 20px}.wealth-controls-top{gap:12px}.wealth-controls-top p{font-size:11px;line-height:1.6}.wealth-controls-top p span{display:block;margin-left:0}.wealth-controls-top output{font-size:32px}.wealth-slider-row{gap:16px}.wealth-play{width:44px;height:44px}.wealth-slider-track{padding-top:15px}.wealth-controls-hint{font-size:10px}.wealth-bubble h3{font-weight:700}}
+@media(prefers-reduced-motion:reduce){.wealth-bubble{animation:none;transition:none}}
